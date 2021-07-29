@@ -46,7 +46,7 @@ public class Solution {
                     }
                 }
             }
-
+            //지금 생각해보면, 세로 파트를 가로 파트를 복붙하는 것 보단 전치행렬을 사용하면 좀더 멋있을 것 같다.
             //세로
             for(int j=0 ; j<BOARDSIZE ; j++){
                 for(int start = 0; start<BOARDSIZE ; start++){
