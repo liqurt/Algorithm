@@ -6,16 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.FileInputStream;
 
-// 24 2
-// 2 7 11 6 6 2 2 15 15 4 4 2 4 10 7 1 1 7 1 8 1 17 3 22
-
-
-//24 2
-//1 17 3 22 1 8 1 7 7 1 2 7 2 15 15 4 6 2 11 6 4 10 4 2
 public class Solution {
 
     static final int T = 10;
     static final int SIZE = 101;
+
     public static void main(String[] args) throws Exception{
 
         System.setIn(new FileInputStream("./src/_210802/dailyHW/Contact/input.txt"));
@@ -25,53 +20,54 @@ public class Solution {
         {
             final int N = sc.nextInt();
             final int START = sc.nextInt();
-            boolean[][] G = new boolean[SIZE][SIZE];
+            int[][] G = new int[SIZE][SIZE];
 
             for(int i=0 ; i<N ; i+=2) {
                 int src = sc.nextInt();
                 int dst = sc.nextInt();
-                G[src][dst] = true;
+                G[src][0] ++; // g[src][0] : src 에서 다른 노드로 갈수있는 경우의 수, '경로' 가 '1개 더' 생겼다!
+                G[src][G[src][0]] = dst; // '몇 번째 경로' 인지, '어디' 로 가는지
             }
 
-            System.out.print("#"+test_case+"\n");
             int result = BFS(G,START);
-            System.out.println();
+            System.out.println("#"+test_case+" "+result);
         }
     }
 
-    private static int BFS(boolean[][] g, int v) {
-        int[] step = new int[g.length];
-        int stemNum = 1;
+    // 방법1 : v를 큐에 넣을때 레벨도 함꼐 집어넣음(2,0)(15,1)(7,1)...(10,3),(8,3),(17,3)
+    // 방법2(채택) : delimiter(ex:'-1')를 집어넣음 [2,-1,15,7,-1,4,1,-1,10,8,17,-1]
+    private static int BFS(int[][] g, int v) {
+        int ans = -1;
         boolean[] visited = new boolean[g.length];
         int[] Q = new int[g.length];
         int f=-1,r=-1;
 
-        r++;
-        Q[r] = v;
-
+        Q[++r] = v;
+        Q[++r] = -1;
         visited[v] = true;
-        step[v] = stemNum;
 
-        while(r!=f){
+        while(true){
             int t = Q[++f];
-
-            int[] uList = new int[SIZE];
-            int uListIdx = 0;
-            for(int i=0; i<SIZE ; i++){
-                if(g[t][i]){
-                    uList[uListIdx++] = i;
+            if(ans < t){
+                ans = t;
+            }
+            if(t == -1){
+                if(f == r){
+                    break; // 큐가 비었다면
+                }
+                else{
+                    ans = Q[++r] = -1;
+                    continue;
                 }
             }
 
-            for(int i=0,u ; i<uListIdx ; i++){
-                u = uList[i];
-                if(!visited[u]){
-                    Q[++r] = u;
-                    visited[u] = true;
+            for(int i=0; i<g[t][0]; i++){ // g[t][0] : t에서 다른 노드로 갈수있는 경우의 수
+                if(!visited[g[t][i+1]]){ // g[t][1] - t에서 다른 노드로 가는 1번째 경우, 값은 목적지(이웃)
+                    visited[g[t][i+1]] = true;
+                    Q[++r] = g[t][i+1];
                 }
             }
-            System.out.println();
         }
-        return 0;
+        return ans;
     }
 }
