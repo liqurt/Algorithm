@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.util.Scanner;
 
 class Solution {
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         final int T = 10;
         System.setIn(new FileInputStream("./src/_210730/dailyHW/계산기3/input.txt"));
         Scanner sc = new Scanner(System.in);
@@ -32,13 +32,11 @@ class Solution {
         int top = -1;
 
         for(int i = 0 ;i<stack.length;i++){
-            if(isInteger(postfix[i])){
+            if(isInteger(postfix[i])){ // 숫자면 스택에 넣음
                 stack[++top] = postfix[i];
-            }else{
-                int b = Integer.parseInt(stack[top]);
-                stack[top--] = "";
-                int a = Integer.parseInt(stack[top]);
-                stack[top--] = "";
+            }else{ // 연산자면
+                int b = Integer.parseInt(stack[top--]); // 첫 팝 : 무조건 숫자일수밖에 없음
+                int a = Integer.parseInt(stack[top--]); // 둘째 팝 : 무조건 숫자일수밖에 없음
                 switch (postfix[i]){
                     case "+":
                         stack[++top] = String.valueOf(a+b);
@@ -55,7 +53,7 @@ class Solution {
                 }
             }
         }
-        return Integer.parseInt(stack[top--]);
+        return Integer.parseInt(stack[top]);
     }
 
     private static boolean isInteger(String s){
@@ -74,41 +72,34 @@ class Solution {
         int j=0;
 
         for (String token : infix) {
-            if (isInteger(token)) {
+            if (isInteger(token)) { // 숫자 : 바로 포스트픽스에 넣음
                 postfix[j++] = token;
             } else {
                 switch (token) {
-                    case "(":
+                    case "(": // 여는 괄호 : 스택에 넣음
                         stack[++top] = token;
                         break;
-                    case ")":
+                    case ")": // 닫는 괄호 : 여는 괄호가 나올때 까지, 스택에서 pop 한걸 포스트픽스에 넣음
                         while (true) {
                             if (stack[top].equals("(")) {
-                                stack[top] = null;
                                 top--;
                                 break;
                             } else {
-                                postfix[j++] = stack[top];
-                                stack[top] = null;
-                                top--;
+                                postfix[j++] = stack[top--];
                             }
                         }
                         break;
-                    case "+":
+                    case "+": // 더하기 : 스택 맨 위가 더하기, 곱하기면 --> 스택 맨 위 연산자를 포스트픽스에 넣음
                         if (stack[top].equals("+") || stack[top].equals("*")) {
-                            postfix[j++] = stack[top];
-                            stack[top] = null;
-                            top--;
+                            postfix[j++] = stack[top--];
                         }
-                        stack[++top] = token;
+                        stack[++top] = token; // 나는 스택에 들어감
                         break;
-                    case "*":
+                    case "*":// 곱하기 : 스택 맨 위가 곱하기면 --> 스택 맨 위 연산자를 포스트픽스에 넣음
                         if (stack[top].equals("*")) {
-                            postfix[j++] = stack[top];
-                            stack[top] = null;
-                            top--;
+                            postfix[j++] = stack[top--];
                         }
-                        stack[++top] = token;
+                        stack[++top] = token; // 나는 스택에 들어감
                         break;
                 }
             }
