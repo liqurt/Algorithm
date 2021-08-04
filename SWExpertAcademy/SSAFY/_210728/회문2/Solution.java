@@ -4,11 +4,11 @@ import java.io.FileInputStream;
 import java.util.Scanner;
 
 public class Solution {
-    public static void main(String args[]) throws Exception
-    {
-        final int T = 10;
-        final int BOARDSIZE = 100;
 
+    static final int T = 10;
+    static final int BOARDSIZE = 100;
+
+    public static void main(String args[]) throws Exception {
         System.setIn(new FileInputStream("./src/_210728/dailyHW/회문2/input.txt"));
         Scanner sc = new Scanner(System.in);
 
@@ -17,70 +17,60 @@ public class Solution {
             sc.nextInt(); // test_case, 큰 의미없음
             char[][] board = new char[BOARDSIZE][BOARDSIZE];
             for(int i = 0; i<BOARDSIZE ; i++){
-                    String temp = sc.next();
-                    String temp2[] = temp.split("");
+                    String[] temp = sc.next().split("");
                     for(int j=0 ;j<BOARDSIZE;j++){
-                        board[i][j] = temp2[j].charAt(0);
+                        board[i][j] = temp[j].charAt(0);
                     }
             }
             int max=-1;
+            max = HoeMoon(board, max);
+            Transpose(board);
+            max = HoeMoon(board, max);
 
-            char[] ca;
-            // 가로
-            for(int i=0 ; i<BOARDSIZE ; i++){
-                for(int start = 0; start<BOARDSIZE ; start++){
-                    for(int end = start ; end<BOARDSIZE ; end++){
-                        ca = new char[end-start+1];
-                        for(int k=0, S=start; k<ca.length ; k++){
-                            if(end<S){
-                                break;
-                            }
-                            ca[k] = board[i][S];
-                            S++;
-                        }
-                        if(isHoeMoon(ca)){
-                            if(max<ca.length){
-                                max = ca.length;
-                            }
-                        }
-                    }
-                }
-            }
-            //지금 생각해보면, 세로 파트를 가로 파트를 복붙하는 것 보단 전치행렬을 사용하면 좀더 멋있을 것 같다.
-            //세로
-            for(int j=0 ; j<BOARDSIZE ; j++){
-                for(int start = 0; start<BOARDSIZE ; start++){
-                    for(int end = start ; end<BOARDSIZE ; end++){
-                        ca = new char[end-start+1];
-                        for(int k=0, S=start; k<ca.length ; k++){
-                            if(end<S){
-                                break;
-                            }
-                            ca[k] = board[S][j];
-                            S++;
-                        }
-                        if(isHoeMoon(ca)){
-                            if(max<ca.length){
-                                max = ca.length;
-                            }
-                        }
-                    }
-                }
-            }
             System.out.println("#"+test_case+" "+max);
         }
     }
-
-    public static boolean isHoeMoon(char[] ca) {
-        if (ca.length == 1) {
-            return true;
-        } else {
-            for (int start = 0, end = ca.length - 1; start < ca.length / 2; start++, end--) {
-                if (ca[start] != ca[end]) {
+    private static boolean isHoeMoon(char[] charArray) {
+        if (charArray.length != 1) {
+            for (int start = 0, end = charArray.length - 1; start < charArray.length / 2; start++, end--) {
+                if (charArray[start] != charArray[end]) {
                     return false;
                 }
             }
-            return true;
+        }
+        return true;
+    }
+    private static int HoeMoon(char[][] board, int max) {
+        for(int i=0 ; i<BOARDSIZE ; i++){
+            for(int start = 0; start<BOARDSIZE ; start++){
+                for(int end = start ; end<BOARDSIZE ; end++){
+                    char[] charArray = new char[end-start+1];
+                    for(int k=0, S=start; k<charArray.length ; k++){
+                        if(end<S){
+                            break;
+                        }
+                        charArray[k] = board[i][S];
+                        S++;
+                    }
+                    if(isHoeMoon(charArray)){
+                        if(max<charArray.length){
+                            max = charArray.length;
+                        }
+                    }
+                }
+            }
+        }
+        return max;
+    }
+    private static void Transpose(char[][] board){
+        for(int i=0 ; i< board.length ; i++){
+            for(int j=0 ; j<board.length ; j++){
+                if(i<j){
+                    char temp = board[i][j];
+                    board[i][j] = board[j][i];
+                    board[j][i] = temp;
+                }
+            }
         }
     }
 }
