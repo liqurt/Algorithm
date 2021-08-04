@@ -22,31 +22,27 @@ class Solution
     public static int isValid(char[] msg){
         int top = -1;
         char[] stack = new char[msg.length];
+
         for(int i=0 ; i<msg.length ; i++){
             if((msg[i] == '(') || (msg[i] == '{') ||(msg[i] == '[') ||(msg[i] == '<')){
-                stack[++top] = msg[i];
+                stack[++top] = msg[i]; //여는 괄호면 스택에 넣고
             }else{
-                if(top == -1){
+                // 가장 최근의 여는 괄호와 짝이 맞는지 체크
+                if(stack[top]!='(' && msg[i] == ')'){
                     return 0;
-                }else{
-                    // 짝이 맞는지 아닌지 체크
-                    if(stack[top]!='(' && msg[i] == ')'){
-                        return 0;
-                    }else if(stack[top]!='{' && msg[i] == '}'){
-                        return 0;
-                    }else if(stack[top]!='[' && msg[i] == ']'){
-                        return 0;
-                    }else if(stack[top]!='<' && msg[i] == '>'){
-                        return 0;
-                    }
-                    top--;
+                }else if(stack[top]!='{' && msg[i] == '}'){
+                    return 0;
+                }else if(stack[top]!='[' && msg[i] == ']'){
+                    return 0;
+                }else if(stack[top]!='<' && msg[i] == '>'){
+                    return 0;
                 }
+                top--;
             }
         }
-        if(top != -1){
+        if(top != -1){ // case : 여는 괄호, 닫는 괄호 의 수가 동일 하지 않음.
             return 0;
-        }else{
-            return 1;
         }
+        return 1;
     }
 }
