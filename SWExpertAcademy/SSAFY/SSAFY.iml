@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/_210726" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/_210727" isTestSource="false" packagePrefix="_210727.dailyHW" />
+      <sourceFolder url="file://$MODULE_DIR$/_210728" isTestSource="false" packagePrefix="_210728.dailyHW" />
+      <sourceFolder url="file://$MODULE_DIR$/_210729" isTestSource="false" packagePrefix="_210729.dailyHW" />
+      <sourceFolder url="file://$MODULE_DIR$/_210730" isTestSource="false" packagePrefix="_210730.dailyHW" />
+      <sourceFolder url="file://$MODULE_DIR$/_210802" isTestSource="false" packagePrefix="_210802.dailyHW" />
+      <sourceFolder url="file://$MODULE_DIR$/_210803" isTestSource="false" packagePrefix="_210803.dailyHW" />
+      <sourceFolder url="file://$MODULE_DIR$/_210804" isTestSource="false" packagePrefix="_210804.dailyHW" />
+      <sourceFolder url="file://$MODULE_DIR$/_210805" isTestSource="false" packagePrefix="_210805.dailyHW" />
+      <sourceFolder url="file://$MODULE_DIR$/_210806" isTestSource="false" packagePrefix="_210806.dailyHW" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
