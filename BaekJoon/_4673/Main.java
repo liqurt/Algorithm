@@ -1,4 +1,4 @@
-package BOJ._4673;
+package baekjoon._4673;
 
 public class Main {
     public static void main(String[] args){

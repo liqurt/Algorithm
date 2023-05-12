@@ -1,4 +1,4 @@
-package BOJ._5622;
+package baekjoon._5622;
 
 import java.io.BufferedReader;
 import java.io.IOException;

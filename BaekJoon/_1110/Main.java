@@ -1,9 +1,8 @@
-package BOJ._1110;
+package baekjoon._1110;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 import static java.lang.System.exit;
 

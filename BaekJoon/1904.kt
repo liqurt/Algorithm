@@ -1,4 +1,4 @@
-val n = readLine()!!.toInt()
+private val n = readLine()!!.toInt()
 const val key = 15746
 const val arrayLimit = 1000000
 

@@ -1,4 +1,4 @@
-package BOJ._10809;
+package baekjoon._10809;
 
 import java.util.Arrays;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package BOJ._15596;
+package baekjoon._15596;
 
 public class Test {
     long sum(int[] a){
