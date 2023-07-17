@@ -13,7 +13,7 @@ fun main(){
     val n = br.readLine().toInt()
     val nums = List<Int>(n){ i->0}.toMutableList()
     for(i in 0 until n){
-        nums[0] = br.readLine().toInt()
+        nums[i] = br.readLine().toInt()
     }
     nums.sort()
 
