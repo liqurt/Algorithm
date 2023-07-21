@@ -18,7 +18,36 @@ fun main(){
         pointArray[it] = pi
     }
 
+    // x기준 정렬 - 버블 정렬하면 시간 초과남...
+    for(i in 0 until n){
+        for(j in i+1 until n){
+            if(pointArray[j].x < pointArray[i].x){
+                val temp = pointArray[i]
+                pointArray[i] = pointArray[j]
+                pointArray[j] = temp
+            }
+        }
+    }
 
+    // y기준 정렬
+    for(i in 0 until n){
+        for(j in i+1 until n){
+            if(pointArray[i].x == pointArray[j].x){
+                if(pointArray[j].y < pointArray[i].y){
+                    val temp = pointArray[i]
+                    pointArray[i] = pointArray[j]
+                    pointArray[j] = temp
+                }
+            }
+        }
+    }
+
+    // 출력
+    for(i in 0 until n){
+        sb.append(pointArray[i].x).append(" ").append(pointArray[i].y).append("\n")
+    }
+    sb.deleteCharAt(sb.lastIndex)
+    print(sb)
 }
 
 data class Point(
