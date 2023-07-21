@@ -18,7 +18,7 @@ fun main(){
         pointArray[it] = pi
     }
 
-    // x기준 정렬 - 버블 정렬하면 시간 초과남...
+    // x기준 정렬
     for(i in 0 until n){
         for(j in i+1 until n){
             if(pointArray[j].x < pointArray[i].x){
