@@ -12,35 +12,13 @@ fun main(){
 
     val n = br.readLine().toInt()
     val pointArray = Array<Point>(n){i -> Point(0,0)}
-    repeat(n){
+    repeat(n){ it ->
         val (xi,yi) = br.readLine().split(" ").map { it.toInt() }
         val pi = Point(xi,yi)
         pointArray[it] = pi
     }
 
-    // x기준 정렬
-    for(i in 0 until n){
-        for(j in i+1 until n){
-            if(pointArray[j].x < pointArray[i].x){
-                val temp = pointArray[i]
-                pointArray[i] = pointArray[j]
-                pointArray[j] = temp
-            }
-        }
-    }
-
-    // y기준 정렬
-    for(i in 0 until n){
-        for(j in i+1 until n){
-            if(pointArray[i].x == pointArray[j].x){
-                if(pointArray[j].y < pointArray[i].y){
-                    val temp = pointArray[i]
-                    pointArray[i] = pointArray[j]
-                    pointArray[j] = temp
-                }
-            }
-        }
-    }
+    pointArray.sortWith(compareBy<Point> {it.x}.thenBy {it.y})
 
     // 출력
     for(i in 0 until n){
