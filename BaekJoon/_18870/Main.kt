@@ -9,37 +9,21 @@ class Main {
 }
 
 fun main(){
+    // 입력
     val br = BufferedReader(InputStreamReader(System.`in`))
     val sb = StringBuilder()
-
-    val OVERNUMBER = 1000001
     val n = br.readLine().toInt()
     val originalXarr = Array<Int>(n){0}
     val st = StringTokenizer(br.readLine())
     while(st.hasMoreTokens()){
         originalXarr[n-st.countTokens()] = st.nextToken().toInt()
     }
-
-    // 7
-    // 9 2 2 -3 7 -3 -3
-
-    // pre option
-    // c = 0
-    // originalArr, compressedArr
-
-    /*
-    1. 오리지널 어레이에서 최소값을 찾는다.
-    2. 최소값을 가진 모든 인덱스를 찾는다.
-    3. 압축 어레이의 해당 인덱스에 c 값을 넣는다.
-    4. c++
-    5. 오리지널 어레이의 해당 인덱스에는 overnumber 값을 넣는다.
-    6. 오리지널 어레이의 모든 값이 overnumber가 될 때 까지 반복
-     */
-
-    var c = 0
     val compressedXarr = Array<Int>(n){0}
 
-    while(originalXarr.min() != OVERNUMBER){
+    // 시간초과된 첫번쨰 방법
+    val OVERNUMBER = 1000001
+    var c = 0
+    while(originalXarr.min() != OVERNUMBER){ //O(n) = n, 밑에 꺼 포함하면 O(n) = n^2
         val min = originalXarr.min()
         val minIndexStack = Stack<Int>()
         for (i in 0 until n){ // O(n) = n
@@ -61,3 +45,10 @@ fun main(){
     sb.deleteCharAt(sb.length-1)
     print(sb)
 }
+
+data class Point(
+    val originalIndex : Int,
+    val originalValue : Int,
+    val compressIndex : Int,
+    val compressValue : Int
+)
