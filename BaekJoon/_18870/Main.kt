@@ -19,30 +19,27 @@ fun main() { //아직도 시간초과... O(n) 보다 작은 걸 써야한다...
     val sb = StringBuilder()
 
     val n = br.readLine().toInt()
-    val st = StringTokenizer(br.readLine())
+    val st = StringTokenizer(br.readLine()) // O(n) = n
     val points = Array(n){0}
     while (st.hasMoreTokens()) {
         val i = n - st.countTokens()
         val v = st.nextToken().toInt()
         points[i] = v
     }
-}
 
+    val points2 = points.sortedArray().distinct()
+    val hm = HashMap<Int,Int>(points2.size)
+    for(i in 0 until points2.size){
+        hm.put(points2[i], i)
+    }
+
+    for(i in 0 until n){
+        print("${hm[i]} ")
+    }
+}
 /*
-* 2 4 -10 4 -9
-* -10 -9 2 4 4
-*
-* map(v,i)
-* -10 0
-* -9 1
-* 2 2
-* 4 3
-*
-* 1. 입력 받을것 다 받고 그걸 원본 어레이에 저장
-* 2. 원본 어레이 하나 복제함, 그걸 value기준 sort.
-* 3. hashMap만듬
-* 4. 정렬한 어레이로 해쉬맵을 제작, key = v, value = 최초로 나오는 index
-* 5. 원본 어레이 0부터 끝까지 루프
-* 6. 원본 어레이 값을 가져와 키로 삼음
-* 7. 그 키로 해쉬맵 탐색
+* 1. 입력
+* 2. 정렬
+* 3. 중복 제거
+* 4. 인덱스가 곧 압축된 좌표가 된다...
 * */
