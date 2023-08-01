@@ -45,4 +45,10 @@ fun main(){
         sb.append(" ")
     }
     print(sb)
+
+    /*
+    * 1. numCards로 해시맵 만듬
+    * 2. 상근numCards로 루프 돌림
+    * 2-1.   상근의 카드번호로 numCards 해시맵 탐방
+    * */
 }
