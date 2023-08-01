@@ -12,8 +12,6 @@ fun main(){
     val br = BufferedReader(InputStreamReader(System.`in`))
     val sb = StringBuilder()
 
-    val maxN = 500000
-
     // 입력
     val n = br.readLine().toInt()
     var st = StringTokenizer(br.readLine())
