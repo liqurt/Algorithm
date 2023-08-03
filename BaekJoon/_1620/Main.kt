@@ -4,6 +4,8 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class Main {
+//    남의 뇌를 참고함
+//    https://youjourney.github.io/archivers/BOJ1620
 }
 
 fun main(){
@@ -11,23 +13,15 @@ fun main(){
     val sb = StringBuilder()
 
     val (n, m) = br.readLine().split(" ").map { it.toInt() }
-    val hmNameToNumber = HashMap<String,Int>()
-    val hmNumberToName = HashMap<Int,String>()
+    val pokemonHashMap = HashMap<String,String>()
     for(pokemonNumber in 1 .. n){
         val pokemonName = br.readLine()
-        hmNameToNumber[pokemonName] = pokemonNumber
-        hmNumberToName[pokemonNumber] = pokemonName
+        pokemonHashMap[pokemonNumber.toString()] = pokemonName
+        pokemonHashMap[pokemonName] = pokemonNumber.toString()
     }
 
     for(i in 0 until m){
-        val originalQuestion = br.readLine()
-        val question = originalQuestion.toIntOrNull() // 숫자가 아니라면 null이 되겠지
-        if(question == null){
-            sb.append(hmNameToNumber[originalQuestion])
-        }else{
-            sb.append(hmNumberToName[question])
-        }
-        sb.append("\n")
+        sb.append(pokemonHashMap[br.readLine()]).append("\n")
     }
     sb.deleteCharAt(sb.lastIndex)
     print(sb)
