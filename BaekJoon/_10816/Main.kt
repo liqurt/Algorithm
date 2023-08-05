@@ -2,13 +2,12 @@ package baekjoon._10816
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.util.Arrays
 import java.util.StringTokenizer
 
 class Main {
+    // 참고한 곳 : (https://wtg-study.tistory.com/29)
 }
 
-// lower_Bound, upper_bound 찾는 식으로 해보자
 
 fun main(){
     val br = BufferedReader(InputStreamReader(System.`in`))
@@ -25,27 +24,38 @@ fun main(){
     val st2 = StringTokenizer(br.readLine(), " ")
     repeat(m){
         val target = st2.nextToken().toInt()
-        lower_bound(numArr, target)
-
+        sb.append(upperBound(numArr, target) - lowerBound(numArr, target)).append(" ")
     }
-    println("")
+    sb.deleteCharAt(sb.lastIndex)
+    print(sb)
 }
 
-// 정렬된 어레이를 받는다고 가정
-fun lower_bound(arr : Array<Int>, target : Int) : Int{
-    for(i in arr.indices){
-        if(arr[i] == target){
-            return i
+fun lowerBound (arr : Array<Int>, k : Int) : Int{
+    var L = 0
+    var R = arr.size - 1
+    while(L<R){
+        val M = (L+R) / 2
+        if(k <= arr[M]){
+            R = M
+        }else{
+            L = M+1
         }
     }
-    return arr.size
+    return R
 }
 
-fun upper_bound(arr : Array<Int>, target : Int) : Int{
-    for(i in arr.indices){
-        if(target < arr[i]){
-            return i
+fun upperBound (arr : Array<Int>, k : Int) : Int{
+    if(k == arr[arr.lastIndex])
+        return arr.size
+    var L = 0
+    var R = arr.size - 1
+    while(L<R){
+        val M = (L+R) / 2
+        if(k < arr[M]){
+            R = M
+        }else{
+            L = M+1
         }
     }
-    return arr.size
+    return R
 }
