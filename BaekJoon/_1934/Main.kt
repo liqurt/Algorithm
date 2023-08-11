@@ -3,6 +3,7 @@ package baekjoon._1934
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.StringBuilder
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 class Main {
@@ -18,19 +19,40 @@ fun main(){
 
     repeat(T){
         val (A,B) = br.readLine().split(" ").map { it.toInt() }
-        // a,b 각각 소인수분해
-        // a의 해쉬, b의 해쉬를 합할것임 이를 c라고 한다.
-        val aHashMap = factorization(A)
-        val bHashMap = factorization(B)
-        sb.append(aHashMap).append("\n").append(bHashMap).append("\n")
-    // 1. a와 b둘다 같은 키가 있다면, 밸류는 큰 놈을 택함.
+        val aFactors = factorization(A)
+        val bFactors = factorization(B)
 
-        // 2. 다른 키가 있다면, 그냥 택함.
-        // 3. c의 키밸을 죄다 곱함.
+        val cFactors = HashMap<Int, Int>()
+        val aFactorsIter = aFactors.iterator()
+        while(aFactorsIter.hasNext()){ // 일단 a를 c에 담고
+            val item = aFactorsIter.next()
+            cFactors[item.key] = item.value
+        }
+
+        val bFactorsIter = bFactors.iterator()
+        while(bFactorsIter.hasNext()){ // b도 c에 담는다
+            val item = bFactorsIter.next()
+            if(cFactors.containsKey(item.key)){ // 근데 밑이 같은게 오면
+                if(cFactors[item.key]!! < item.value){ // 지수가 큰 걸 갖고옴
+                    cFactors[item.key] = item.value
+                }
+            }else{
+                cFactors[item.key] = item.value
+            }
+        }
+        var result = 1
+        val cFactorsIter = cFactors.iterator()
+        while(cFactorsIter.hasNext()){
+            val item = cFactorsIter.next()
+            result *= item.key.toDouble().pow(item.value.toDouble()).toInt()
+        }
+        sb.append("$result\n")
     }
+    sb.deleteCharAt(sb.length-1)
     print(sb)
 }
 
+// 45000 이하의 소수
 fun bringPrimeNumbersUnderMaxnum(): ArrayList<Int> {
     val result = ArrayList<Int>()
     for(n in 2..MAX_NUM){
@@ -49,11 +71,12 @@ fun bringPrimeNumbersUnderMaxnum(): ArrayList<Int> {
     return result
 }
 
-fun factorization(n : Int): ArrayList<Int> {
+// 소인수분해
+fun factorization(n : Int): HashMap<Int,Int> {
     var primeNumbersIndex = 0
     var resultIndex = 0
     var target = n
-    val result = ArrayList<Int>()
+    val result = HashMap<Int,Int>()
     while(true){
         val factor = primeNumbersUnderMaxnum[primeNumbersIndex]
         if(n % factor == 0){
@@ -62,9 +85,7 @@ fun factorization(n : Int): ArrayList<Int> {
                 target /= factor
                 jisu++
                 if(target%factor !=0){
-                    result.add(resultIndex, factor)
-                    resultIndex++
-                    result.add(resultIndex, jisu)
+                    result[factor] = jisu
                     resultIndex++
                     break
                 }
