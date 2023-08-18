@@ -29,28 +29,18 @@ fun gcd(a : Int, b : Int) : Int{
     }
 }
 
-// 최소공배수
-fun lcm(a : Int, b : Int) : Int{
-    var absAB = a*b
-    if(absAB < 0){
-        absAB = -absAB
-    }
-    val result = (absAB / gcd(a,b)).toLong()
-    return result.toInt()
-}
-
 // 약분
-fun simplifyingFraction(a : Int, b : Int) : List<Int>{
-    val gcd = gcd(a,b)
+fun simplifyingFraction(numerator : Int, denominator : Int) : List<Int>{
+    val gcd = gcd(numerator,denominator)
     val result = ArrayList<Int>(2)
-    result.add(a/gcd)
-    result.add(b/gcd)
+    result.add(numerator/gcd)
+    result.add(denominator/gcd)
     return result
 }
 
 // 분수 덧셈
-fun addBothFractions(a: List<Int>, b: List<Int>): List<Int> {
-    val denominator = lcm(a[1], b[1])
-    val numerator = a[0] * (denominator / a[1]) + b[0] * (denominator / b[1]) // 괄호를 치지 않으면 큰 수끼리 곱셈할시 Overflow가 나서 Int로 표현하기 벅찰수가 있다. ex> 29999 30000\n 29998 39999
+fun addBothFractions(fraction1: List<Int>, fraction2: List<Int>): List<Int> {
+    val denominator = fraction1[1] * fraction2[1]
+    val numerator = fraction1[0] * fraction2[1] + fraction1[1] * fraction2[0]
     return simplifyingFraction(numerator, denominator)
 }
