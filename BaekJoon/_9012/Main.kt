@@ -15,7 +15,7 @@ fun main(){
     val t = br.readLine().toInt()
     repeat(t){
         val parenthesisString = br.readLine().toCharArray()
-        if(isThisVPS(parenthesisString)){
+        if(isThisVPSButGreedy(parenthesisString)){
             sb.append("YES").append("\n")
         } else{
             sb.append("NO").append("\n")
@@ -25,6 +25,7 @@ fun main(){
     print(sb)
 }
 
+// 스택으로 풀기
 fun isThisVPS(parenthesisString: CharArray): Boolean {
     val checkVPS = Stack<Char>()
     for(i in parenthesisString.indices){
@@ -38,4 +39,20 @@ fun isThisVPS(parenthesisString: CharArray): Boolean {
         }
     }
     return checkVPS.isEmpty()
+}
+
+// 그리디로 풀기?
+fun isThisVPSButGreedy(parenthesisString: CharArray): Boolean{
+    var top = -1
+    for(i in parenthesisString.indices){
+        if(parenthesisString[i] == '('){
+            top++
+        }else{
+            if(top == -1){
+                return false
+            }
+            top--
+        }
+    }
+    return top == -1
 }
