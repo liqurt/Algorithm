@@ -1,0 +1,107 @@
+package baekjoon._12789
+
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.lang.StringBuilder
+import java.util.*
+
+class Main {
+}
+
+fun main() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val sb = StringBuilder()
+
+    var result = "Nice"
+    val n = br.readLine().toInt()
+    val people = br.readLine().split(" ").map { it.toInt() }
+    val original = Stack<Int>()
+    for (i in people.size-1 downTo (0)) {
+        original.push(people[i])
+    }
+    val snackBar = Stack<Int>()
+    val narrowSpace = Stack<Int>()
+
+    var possibleNumber = 1
+    while (snackBar.size != n) {
+        val candidates = pickStudent(original, narrowSpace)
+        val snackEater = whoCanGoToSnackBar(possibleNumber, candidates[0], candidates[1])
+        when(snackEater.first){
+            "Original" -> {
+                snackBar.push(original.pop())
+                possibleNumber++
+            }
+            "Narrow" -> {
+                snackBar.push(narrowSpace.pop())
+                possibleNumber++
+            }
+            "Nobody" -> {
+                val student = original.peek()
+                if(narrowSpace.isNotEmpty()){
+                    val prevStudent = narrowSpace.peek()
+                    if(prevStudent < student){
+                        result = "Bad"
+                        break
+                    }
+                }
+                narrowSpace.push(original.pop())
+
+            }
+            else -> {
+                println("오묘한 에러 발생")
+            }
+        }
+    }
+    print(result)
+
+}
+
+fun pickStudent(original: Stack<Int>, narrowSpace: Stack<Int>): List<Int> {
+    val result = mutableListOf<Int>(-1, -1)
+    if (original.isNotEmpty()) {
+        result[0] = original.peek()
+    }
+    if (narrowSpace.isNotEmpty()) {
+        result[1] = narrowSpace.peek()
+    }
+    return result
+}
+
+fun whoCanGoToSnackBar(possibleNumber: Int, studentFromOriginal: Int, studentFromNarrowSpace: Int): Pair<String, Int> {
+    return when (possibleNumber) {
+        studentFromOriginal -> {
+            Pair("Original", studentFromOriginal)
+        }
+
+        studentFromNarrowSpace -> {
+            Pair("Narrow", studentFromNarrowSpace)
+        }
+
+        else -> {
+            Pair("Nobody", -1)
+        }
+    }
+}
+
+/*
+정의
+기존줄 = A, 한명씩만 설수 있는 공간 = B, 간식 받는 곳 = C
+이동 가능 : A->B,C / B->C
+
+새로 발견한 점.
+B.top의 숫자를 BT라고 가정한다. B에 들어갈 숫자가 BT보다 크다면 실패한다.
+
+1. A,B의 이동 가능한 학생들을 뽑는다. (1명 또는 2명)
+2. C로 가기 적합한지 확인한다.
+3. 적합하다! -> 해당 학생 C로 이동.
+4. 부적합하다! -> A의 이동가능한 학생을 B로 이동.
+5. 부적합하다! -> B로 방금 이동한 학생의 숫자가 기존 B의 맨 앞의 숫자보다 크다면 false
+6. 별탈 없으면 true?
+* */
+
+// 안되는 경우
+// (1) 2,3,1
+// (2) 1,3,4,2
+// (1) 2,3,1,4
+// (1) 2,3,4,1
+// (2) 2,4,1,3
