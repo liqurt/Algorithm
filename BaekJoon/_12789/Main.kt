@@ -12,75 +12,40 @@ fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val sb = StringBuilder()
 
-    var result = "Nice"
     val n = br.readLine().toInt()
     val people = br.readLine().split(" ").map { it.toInt() }
-    val original = Stack<Int>()
-    for (i in people.size-1 downTo (0)) {
-        original.push(people[i])
+    val eastLine = Stack<Int>()
+    val southLine = Stack<Int>()
+    val westLine = Stack<Int>()
+    for (i in people.size - 1 downTo (0)) {
+        eastLine.push(people[i])
     }
-    val snackBar = Stack<Int>()
-    val narrowSpace = Stack<Int>()
 
-    var possibleNumber = 1
-    while (snackBar.size != n) {
-        val candidates = pickStudent(original, narrowSpace)
-        val snackEater = whoCanGoToSnackBar(possibleNumber, candidates[0], candidates[1])
-        when(snackEater.first){
-            "Original" -> {
-                snackBar.push(original.pop())
-                possibleNumber++
-            }
-            "Narrow" -> {
-                snackBar.push(narrowSpace.pop())
-                possibleNumber++
-            }
-            "Nobody" -> {
-                val student = original.peek()
-                if(narrowSpace.isNotEmpty()){
-                    val prevStudent = narrowSpace.peek()
-                    if(prevStudent < student){
-                        result = "Bad"
-                        break
-                    }
-                }
-                narrowSpace.push(original.pop())
+    val goodResult = "Nice"
+    val badResult = "Sad"
+    var result = goodResult
+    var snackNumber = 1
 
-            }
-            else -> {
-                println("오묘한 에러 발생")
+    while (snackNumber <= n) {
+        if(eastLine.isNotEmpty() && eastLine.peek() == snackNumber){
+            westLine.push(eastLine.pop())
+            snackNumber++
+        }
+        else if(southLine.isNotEmpty() && southLine.peek() == snackNumber){
+            westLine.push(southLine.pop())
+            snackNumber++
+        }else{
+            if(southLine.isNotEmpty() && southLine.peek() < eastLine.peek()){
+                result = badResult
+                break
+            }else{
+                southLine.push(eastLine.pop())
             }
         }
     }
+
+    sb.append(result)
     print(result)
-
-}
-
-fun pickStudent(original: Stack<Int>, narrowSpace: Stack<Int>): List<Int> {
-    val result = mutableListOf<Int>(-1, -1)
-    if (original.isNotEmpty()) {
-        result[0] = original.peek()
-    }
-    if (narrowSpace.isNotEmpty()) {
-        result[1] = narrowSpace.peek()
-    }
-    return result
-}
-
-fun whoCanGoToSnackBar(possibleNumber: Int, studentFromOriginal: Int, studentFromNarrowSpace: Int): Pair<String, Int> {
-    return when (possibleNumber) {
-        studentFromOriginal -> {
-            Pair("Original", studentFromOriginal)
-        }
-
-        studentFromNarrowSpace -> {
-            Pair("Narrow", studentFromNarrowSpace)
-        }
-
-        else -> {
-            Pair("Nobody", -1)
-        }
-    }
 }
 
 /*
