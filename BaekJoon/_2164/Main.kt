@@ -2,10 +2,7 @@ package baekjoon._2164
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.util.ArrayDeque
 import java.util.LinkedList
-import java.util.PriorityQueue
-import java.util.Queue
 
 class Main {
 }
@@ -30,5 +27,6 @@ fun main(){
         putCardUnder = !putCardUnder
     }
 
-    print(q.pollFirst())
+    sb.append(q.pollFirst())
+    print(sb)
 }
