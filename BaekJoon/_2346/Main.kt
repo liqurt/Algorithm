@@ -2,7 +2,6 @@ package baekjoon._2346
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.util.StringTokenizer
 import kotlin.collections.ArrayDeque
 import kotlin.math.abs
 import kotlin.text.StringBuilder
