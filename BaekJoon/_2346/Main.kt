@@ -3,6 +3,7 @@ package baekjoon._2346
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.StringTokenizer
+import kotlin.collections.ArrayDeque
 import kotlin.math.abs
 import kotlin.text.StringBuilder
 
@@ -14,7 +15,7 @@ fun main() {
     val sb = StringBuilder()
 
     val n = br.readLine().toInt()
-    val balloons = ArrayDeque<Balloon>()
+    val balloons = ArrayDeque<Balloon>(initialCapacity = n)
     val st = StringTokenizer(br.readLine())
     var i=1
     while (st.hasMoreTokens()) {
@@ -23,38 +24,37 @@ fun main() {
         i++
     }
 
-    val result = chainPop(balloons, n)
-    print(result)
+    val result = chainPop(balloons)
+    repeat(n){
+        sb.append(result[it]).append(" ")
+    }
+    sb.deleteCharAt(sb.lastIndex)
+    print(sb)
 
 }
 
-fun chainPop(balloons: ArrayDeque<Balloon>, n: Int): String {
-    val sb = StringBuilder()
+fun chainPop(balloons: ArrayDeque<Balloon>): List<Int> {
+    val result = mutableListOf<Int>()
+    result.add(1) // 항상 1부터 터짐
+
     var paper = balloons.removeFirst().paper
-    sb.append(1).append(" ")
 
     while (balloons.isNotEmpty()) {
-        var poppedBalloonPaper: Int
-        var poppedBalloonIndex: Int
         if (0 < paper) {
             repeat(paper - 1) {
                 balloons.addLast(balloons.removeFirst()) // 앞의 것을 뒤로
             }
-            poppedBalloonPaper = balloons.first().paper
-            poppedBalloonIndex = balloons.removeFirst().index
+            paper = balloons.first().paper
+            result.add(balloons.removeFirst().index)
         } else {
             repeat(abs(paper) - 1) {
                 balloons.addFirst(balloons.removeLast()) // 뒤의 것을 앞으로
             }
-            poppedBalloonPaper = balloons.last().paper
-            poppedBalloonIndex = balloons.removeLast().index
+            paper = balloons.last().paper
+            result.add(balloons.removeLast().index)
         }
-        paper = poppedBalloonPaper
-        sb.append(poppedBalloonIndex).append(" ")
     }
-    sb.deleteCharAt(sb.lastIndex)
-
-    return sb.toString()
+    return result
 }
 
 data class Balloon(
