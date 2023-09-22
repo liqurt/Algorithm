@@ -15,14 +15,10 @@ fun main() {
     val sb = StringBuilder()
 
     val n = br.readLine().toInt()
-    val balloons = ArrayDeque<Balloon>(initialCapacity = n)
-    val st = StringTokenizer(br.readLine())
-    var i=1
-    while (st.hasMoreTokens()) {
-        val item = st.nextToken().toInt()
-        balloons.addLast(Balloon(item, i))
-        i++
-    }
+    val arr = br.readLine().split(" ")
+    val balloons = ArrayDeque((1..n).map{
+        Balloon(arr[it - 1].toInt(), it)
+    })
 
     val result = chainPop(balloons)
     repeat(n){
