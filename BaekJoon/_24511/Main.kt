@@ -17,12 +17,12 @@ fun main() {
     val m = br.readLine().toInt()
     val c = br.readLine().split(" ").map { it.toInt() }
 
-    var result = mutableListOf<Int>()
+    val result = mutableListOf<Int>()
 
     repeat(m) {outerIndex ->
         val cItem = c[outerIndex]
         var outItem : Int = -1
-        var inItem : Int = -1
+        var inItem : Int
         repeat(n) {innerIndex ->
             if(a[innerIndex] == 0){ // 큐
                 //처음 자료구조
