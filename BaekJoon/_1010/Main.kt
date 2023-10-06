@@ -29,12 +29,12 @@ fun bridge(n : Int, m : Int) : Int{
     if(bridgeHash.containsKey(candidate)){
         return bridgeHash[candidate]!!
     }else{
-        if(n == 1){
-            result = m
+        result = if(n == 1){
+            m
         }else if(n == m){
-            result = 1
+            1
         }else{
-            result = bridge(n,m-1) + bridge(n-1,m-1)
+            bridge(n,m-1) + bridge(n-1,m-1)
         }
         bridgeHash[candidate] = result
     }

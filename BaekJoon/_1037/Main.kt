@@ -20,11 +20,10 @@ fun main(){
     }
     yaksuList.sort()
 
-    var result = -1
-    if(yaksuList.size == 1){
-        result = yaksuList[0] * yaksuList[0]
+    val result: Int = if(yaksuList.size == 1){
+        yaksuList[0] * yaksuList[0]
     }else{
-        result = yaksuList[0] * yaksuList[yaksuList.size-1]
+        yaksuList[0] * yaksuList[yaksuList.size-1]
     }
     sb.append(result)
     print(sb)
