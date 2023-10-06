@@ -8,7 +8,6 @@ class Main {
 
 fun main(){
     val br = BufferedReader(InputStreamReader(System.`in`))
-    val sb = StringBuilder()
 
     val n = br.readLine().toInt()
     val result = n*n-n
